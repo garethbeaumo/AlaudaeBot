@@ -144,6 +144,11 @@
           "type": "number",
           "default": 9222,
           "description": "Antigravity CDP 端口"
+        },
+        "alaudaebot.preventSleep": {
+          "type": "boolean",
+          "default": true,
+          "description": "桥接运行时阻止系统休眠"
         }
       }
     }
@@ -166,11 +171,12 @@ Antigravity 启动
   已设置 → 启动 Bridge Worker
               ├── 连接 Telegram Bot API (long polling)
               ├── 连接 CDP (localhost:9222)
+              ├── 阻止系统休眠 (preventSleep=true 时)
               └── 状态栏: 🟢 AlaudaeBot
     ↓
-运行中... (消息桥接)
+运行中... (消息桥接，系统保持唤醒)
     ↓
-Antigravity 关闭 → 扩展 deactivate → 清理资源
+Antigravity 关闭 → 扩展 deactivate → 恢复休眠 → 清理资源
 ```
 
 ### 4.3 状态栏
@@ -293,6 +299,7 @@ AlaudaeBot/
 | CDP 连接 | 仅 localhost，无外部暴露 |
 | Bot Token 存储 | VS Code SecretStorage API |
 | 消息传输 | 本地直连，不经过云端 (MVP) |
+| 休眠管理 | 桥接运行时阻止休眠 (Windows SetThreadExecutionState)；停止后恢复 |
 
 ---
 
@@ -351,8 +358,8 @@ AlaudaeBot/
 |------|--------|------|
 | Antigravity 更新导致 DOM 变化 | 🟡 中 | 选择器集中管理；版本适配层 |
 | CDP 端口号变化 | 🟢 低 | 启动时自动探测 |
-| 扩展内 CDP 连接自身窗口 | 🟡 中 | 已验证可行；后台 Worker 隔离 |
-| 回复检测不准确 | 🟡 中 | 多策略组合 (DOM 变化 + 稳定性检测) |
+| 窗口 Reload / 重启 | 🟢 低 | 扩展 deactivate → 清理 → reactivate → 自动重连；Reload 期间的 Telegram 消息由 Telegram 服务器缓存，long polling 重连后自动拉取 |
+| 回复检测不准确 | 🟡 中 | 多策略组合 (DOM 变化 + 文本稳定性检测) |
 
 ---
 
