@@ -358,8 +358,8 @@ AlaudaeBot/
 |------|--------|------|
 | Antigravity 更新导致 DOM 变化 | 🟡 中 | 选择器集中管理；版本适配层 |
 | CDP 端口号变化 | 🟢 低 | 启动时自动探测 |
-| 窗口 Reload / 重启 | 🟢 低 | 扩展 deactivate → 清理 → reactivate → 自动重连；Reload 期间的 Telegram 消息由 Telegram 服务器缓存，long polling 重连后自动拉取 |
-| 回复检测不准确 | 🟡 中 | 多策略组合 (DOM 变化 + 文本稳定性检测) |
+| 扩展内 CDP 连接自身窗口 | 🟡 中 | 已验证可行；后台 Worker 隔离 |
+| 回复检测不准确 | 🟡 中 | 多策略组合 (DOM 变化 + 稳定性检测) |
 
 ---
 
