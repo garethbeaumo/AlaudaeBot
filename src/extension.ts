@@ -21,12 +21,9 @@ function loadConfig(): AlaudaeConfig {
 
 async function startBridge(): Promise<void> {
   const config = loadConfig();
-  if (!statusBar) {
-    statusBar = new StatusBarController();
-  }
 
   if (!config.telegramBotToken) {
-    statusBar.show("unconfigured");
+    statusBar?.show("unconfigured");
     void vscode.window.showWarningMessage("AlaudaeBot 未配置 Telegram Bot Token");
     return;
   }
@@ -36,7 +33,7 @@ async function startBridge(): Promise<void> {
   bridge = new AlaudaeBridge(cascade, telegram);
 
   await bridge.start();
-  statusBar.show("online");
+  statusBar?.show("online");
 }
 
 async function stopBridge(): Promise<void> {
