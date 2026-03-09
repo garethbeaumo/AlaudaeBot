@@ -1,0 +1,70 @@
+{
+  "name": "alaudaebot",
+  "displayName": "AlaudaeBot - Telegram Bridge",
+  "description": "通过 Telegram 与 Antigravity Agent 对话",
+  "version": "0.0.1",
+  "publisher": "alaudae",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "AI",
+    "Chat"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:alaudaebot.start",
+    "onCommand:alaudaebot.stop",
+    "onCommand:alaudaebot.status",
+    "onCommand:alaudaebot.configure"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "alaudaebot.start", "title": "AlaudaeBot: 启动" },
+      { "command": "alaudaebot.stop", "title": "AlaudaeBot: 停止" },
+      { "command": "alaudaebot.status", "title": "AlaudaeBot: 状态" },
+      { "command": "alaudaebot.configure", "title": "AlaudaeBot: 配置" }
+    ],
+    "configuration": {
+      "title": "AlaudaeBot",
+      "properties": {
+        "alaudaebot.telegramBotToken": {
+          "type": "string",
+          "description": "Telegram Bot Token (从 @BotFather 获取)",
+          "default": ""
+        },
+        "alaudaebot.allowedUsers": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "允许使用的 Telegram 用户 ID 列表",
+          "default": []
+        },
+        "alaudaebot.autoStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "随 Antigravity 启动自动连接"
+        },
+        "alaudaebot.cdpPort": {
+          "type": "number",
+          "default": 9222,
+          "description": "Antigravity CDP 端口"
+        },
+        "alaudaebot.preventSleep": {
+          "type": "boolean",
+          "default": true,
+          "description": "桥接运行时阻止系统休眠"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "check": "tsc -p . --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.5.2"
+  }
+}
