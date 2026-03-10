@@ -1,11 +1,13 @@
-export class MessageQueue {
-  private readonly items: string[] = [];
+import { QueuedMessage } from "../types";
 
-  public add(message: string): void {
+export class MessageQueue {
+  private readonly items: QueuedMessage[] = [];
+
+  public add(message: QueuedMessage): void {
     this.items.push(message);
   }
 
-  public next(): string | undefined {
+  public next(): QueuedMessage | undefined {
     return this.items.shift();
   }
 

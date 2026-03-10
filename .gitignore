@@ -2,3 +2,16 @@ node_modules/
 dist/
 .env
 *.log
+.vscode/settings.json
+
+# 调试脚本和产物
+check-*.ts
+diagnose-*.ts
+test-*.ts
+dom-*.txt
+ext-*.txt
+*-result.txt
+*-status.txt
+
+# VSIX 打包产物
+*.vsix

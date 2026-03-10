@@ -12,19 +12,39 @@
     "Chat"
   ],
   "activationEvents": [
-    "onStartupFinished",
-    "onCommand:alaudaebot.start",
-    "onCommand:alaudaebot.stop",
-    "onCommand:alaudaebot.status",
-    "onCommand:alaudaebot.configure"
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
-      { "command": "alaudaebot.start", "title": "AlaudaeBot: 启动" },
-      { "command": "alaudaebot.stop", "title": "AlaudaeBot: 停止" },
-      { "command": "alaudaebot.status", "title": "AlaudaeBot: 状态" },
-      { "command": "alaudaebot.configure", "title": "AlaudaeBot: 配置" }
+      {
+        "command": "alaudaebot.start",
+        "title": "AlaudaeBot: 启动"
+      },
+      {
+        "command": "alaudaebot.stop",
+        "title": "AlaudaeBot: 停止"
+      },
+      {
+        "command": "alaudaebot.status",
+        "title": "AlaudaeBot: 状态"
+      },
+      {
+        "command": "alaudaebot.configure",
+        "title": "AlaudaeBot: 配置"
+      },
+      {
+        "command": "alaudaebot.toggle",
+        "title": "AlaudaeBot: 切换启停"
+      },
+      {
+        "command": "alaudaebot.newChat",
+        "title": "AlaudaeBot: 新建对话"
+      },
+      {
+        "command": "alaudaebot.reconnect",
+        "title": "AlaudaeBot: 重新连接（切换窗口）"
+      }
     ],
     "configuration": {
       "title": "AlaudaeBot",
@@ -36,7 +56,9 @@
         },
         "alaudaebot.allowedUsers": {
           "type": "array",
-          "items": { "type": "number" },
+          "items": {
+            "type": "number"
+          },
           "description": "允许使用的 Telegram 用户 ID 列表",
           "default": []
         },
@@ -59,12 +81,21 @@
     }
   },
   "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "build": "tsc -p .",
-    "check": "tsc -p . --noEmit"
+    "check": "tsc -p . --noEmit",
+    "bundle": "npm run clean && node esbuild.js",
+    "package": "npm run bundle && npx vsce package --allow-missing-repository"
   },
   "devDependencies": {
     "@types/node": "^20.14.2",
     "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.7.1",
+    "esbuild": "^0.27.3",
+    "grammy": "^1.41.1",
     "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "playwright-core": "^1.58.2"
   }
 }
